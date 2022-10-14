@@ -1,0 +1,49 @@
+$height: 40px;
+$border-radius: 3px;
+$outline-color: rgb(96, 158, 243);
+
+.search-form {
+  position: relative;
+
+  display: flex;
+  height: $height;
+  width: 320px;
+}
+
+.search-form__input {
+  flex-grow: 1;
+  padding: 10px $height 10px 10px;
+
+  border: none;
+  border-radius: $border-radius;
+
+  transition: box-shadow 200ms;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px $outline-color;
+  }
+}
+
+.search-form__btn {
+  @include centeredFlex;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  height: $height;
+  width: $height;
+
+  border: none;
+  border-radius: 0 $border-radius $border-radius 0;
+
+  & > svg {
+    fill: gray;
+    transition: fill 200ms;
+  }
+
+  &:hover > svg {
+    fill: black;
+  }
+}

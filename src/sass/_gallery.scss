@@ -1,0 +1,48 @@
+.gallery {
+  padding-bottom: $gutter;
+  padding-top: $gutter;
+  margin-top: $gutter * -1;
+}
+
+.photo-card {
+  margin-top: $gutter;
+  user-select: none;
+
+  @include media-breakpoint-only(xs) {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.photo-card img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  padding: $gutter / 1.5 $gutter / 2;
+  gap: $gutter / 2;
+
+  font-size: 0.7em;
+
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+}
+
+.info-item {
+  margin: 0;
+  text-align: center;
+
+  @include centeredFlex;
+
+  & > svg {
+    margin-right: $gutter / 5;
+    fill: gray;
+  }
+}

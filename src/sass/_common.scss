@@ -1,1 +1,14 @@
+@import './utils/variables';
+@import './utils/mixins';
+
 @import '~node_modules/modern-normalize/modern-normalize.css';
+@import 'node_modules/bootstrap/scss/mixins/_breakpoints.scss'; // Bootstrap Breakpoints mixin
+@import 'node_modules/bootstrap/scss/bootstrap-grid.scss'; // Optional Bootstrap Grid
+
+body {
+  padding-top: $header-height;
+}
+
+button:hover {
+  cursor: pointer;
+}
