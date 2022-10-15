@@ -48,6 +48,7 @@
   text-align: center;
 
   @include centeredFlex;
+  flex-direction: column;
 
   & > svg {
     margin-right: $gutter / 5;
