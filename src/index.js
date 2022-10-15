@@ -1,7 +1,7 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { PixabayAPI } from './js/pixabayAPI';
+import { PixabayAPI } from './js/PixabayAPI';
 import { createMarkup } from './js/createMarkup';
 import { refs } from './js/refs';
 
