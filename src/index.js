@@ -6,13 +6,18 @@ import { createMarkup } from './js/createMarkup';
 import { refs } from './js/refs';
 
 const pixabay = new PixabayAPI();
-const lightbox = new SimpleLightbox('.gallery a', {
-  // captionsData: 'alt',
-  // captionDelay: 250,
-});
+const lightbox = new SimpleLightbox('.gallery a');
+
+const options = {
+  root: null,
+  rootMargin: '100px',
+  threshold: 1.0,
+};
+
+const io = new IntersectionObserver(onScroll, options);
 
 refs.form.addEventListener('submit', onSubmit);
-refs.loadMoreBtn.addEventListener('click', onLoadMore);
+// refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
 async function onSubmit(e) {
   e.preventDefault();
@@ -46,7 +51,9 @@ async function onSubmit(e) {
     pixabay.calculateTotalPages(total);
 
     if (pixabay.isShowLoadMore) {
-      refs.loadMoreBtn.classList.remove('is-hidden');
+      // refs.loadMoreBtn.classList.remove('is-hidden');
+      const target = document.querySelector('.photo-card:last-child');
+      io.observe(target);
     }
 
     Notify.success(`Hooray! We found ${total} images.`);
@@ -56,7 +63,42 @@ async function onSubmit(e) {
   }
 }
 
-async function onLoadMore() {
+async function onScroll(entries, observer) {
+  entries.forEach(async entry => {
+    if (entry.isIntersecting) {
+      pixabay.incrementPage();
+      observer.unobserve(entry.target);
+
+      try {
+        const { hits: results } = await pixabay.getPhotos();
+
+        const markup = createMarkup(results);
+        refs.list.insertAdjacentHTML('beforeend', markup);
+        lightbox.refresh();
+
+        if (pixabay.isShowLoadMore) {
+          const target = document.querySelector('.photo-card:last-child');
+          io.observe(target);
+        } else {
+          Notify.warning(
+            "We're sorry, but you've reached the end of search results."
+          );
+        }
+      } catch (error) {
+        Notify.failure(error.message, 'Something went wrong!');
+        clearPage();
+      }
+    }
+  });
+}
+
+function clearPage() {
+  pixabay.resetPage();
+  refs.list.innerHTML = '';
+  refs.loadMoreBtn.classList.add('is-hidden');
+}
+
+/* async function onLoadMore() {
   pixabay.incrementPage();
 
   if (!pixabay.isShowLoadMore) {
@@ -89,10 +131,4 @@ async function onLoadMore() {
     Notify.failure(error.message, 'Something went wrong!');
     clearPage();
   }
-}
-
-function clearPage() {
-  pixabay.resetPage();
-  refs.list.innerHTML = '';
-  refs.loadMoreBtn.classList.add('is-hidden');
-}
+} */
