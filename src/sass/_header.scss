@@ -9,6 +9,6 @@
   height: $header-height;
   padding: $gutter / 2;
 
-  background-color: rgb(80, 98, 182);
+  background-color: $main-color;
   box-shadow: 0 0 $gutter / 2 rgba(0, 0, 0, 0.5);
 }
