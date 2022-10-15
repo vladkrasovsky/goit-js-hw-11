@@ -1,9 +1,15 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import { PixabayAPI } from './js/pixabayAPI';
 import { createMarkup } from './js/createMarkup';
 import { refs } from './js/refs';
 
 const pixabay = new PixabayAPI();
+const lightbox = new SimpleLightbox('.gallery a', {
+  // captionsData: 'alt',
+  // captionDelay: 250,
+});
 
 refs.form.addEventListener('submit', onSubmit);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
@@ -35,6 +41,8 @@ async function onSubmit(e) {
     const markup = createMarkup(results);
     refs.list.insertAdjacentHTML('beforeend', markup);
 
+    lightbox.refresh();
+
     pixabay.calculateTotalPages(total);
 
     if (pixabay.isShowLoadMore) {
@@ -63,6 +71,7 @@ async function onLoadMore() {
 
     const markup = createMarkup(results);
     refs.list.insertAdjacentHTML('beforeend', markup);
+    lightbox.refresh();
 
     const { height: cardHeight } = document
       .querySelector('.gallery')

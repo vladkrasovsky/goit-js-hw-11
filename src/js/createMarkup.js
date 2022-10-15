@@ -9,10 +9,10 @@ export function createMarkup(photos) {
       return (
         acc +
         /*html*/ `
-      <div class="col-sm-6 col-lg-4 col-xl-3 photo-card">
+      <a href="${largeImageURL}" class="col-sm-6 col-lg-4 col-xl-3 photo-card">
         <img
           src="${webformatURL}"
-          alt=""
+          alt="${tags}"
           loading="lazy"
           height="300"
         />
@@ -46,7 +46,7 @@ export function createMarkup(photos) {
             ${downloads}
           </p>
         </div>
-      </div>`
+      </a>`
       );
     },
     ''
